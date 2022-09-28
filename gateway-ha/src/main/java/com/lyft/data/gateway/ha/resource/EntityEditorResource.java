@@ -71,9 +71,8 @@ public class EntityEditorResource {
     try {
       switch (entityType) {
         case GATEWAY_BACKEND:
-          //TODO: make the gateway backend database sensitive
-          ProxyBackendConfiguration backend =
-              OBJECT_MAPPER.readValue(jsonPayload, ProxyBackendConfiguration.class);
+          // TODO: make the gateway backend database sensitive
+          ProxyBackendConfiguration backend = OBJECT_MAPPER.readValue(jsonPayload, ProxyBackendConfiguration.class);
           gatewayBackendManager.updateBackend(backend);
           break;
         case RESOURCE_GROUP:
@@ -84,8 +83,8 @@ public class EntityEditorResource {
         case SELECTOR:
           SelectorsDetail selectorDetails = OBJECT_MAPPER.readValue(jsonPayload,
               SelectorsDetail.class);
-          List<SelectorsDetail> oldSelectorDetails =
-              resourceGroupsManager.readSelector(selectorDetails.getResourceGroupId(), database);
+          List<SelectorsDetail> oldSelectorDetails = resourceGroupsManager
+              .readSelector(selectorDetails.getResourceGroupId(), database);
           if (oldSelectorDetails.size() >= 1) {
             resourceGroupsManager.updateSelector(oldSelectorDetails.get(0),
                 selectorDetails, database);
@@ -99,7 +98,7 @@ public class EntityEditorResource {
       log.error(e.getMessage(), e);
       throw new WebApplicationException(e);
     }
-    return Response.ok().build();
+    return Response.ok().header("Access-Control-Allow-Origin", "*").build();
   }
 
   @GET
@@ -111,13 +110,15 @@ public class EntityEditorResource {
 
     switch (entityType) {
       case GATEWAY_BACKEND:
-        return Response.ok(gatewayBackendManager.getAllBackends()).build();
+        return Response.ok(gatewayBackendManager.getAllBackends()).header("Access-Control-Allow-Origin", "*").build();
       case RESOURCE_GROUP:
-        return Response.ok(resourceGroupsManager.readAllResourceGroups(database)).build();
+        return Response.ok(resourceGroupsManager.readAllResourceGroups(database))
+            .header("Access-Control-Allow-Origin", "*").build();
       case SELECTOR:
-        return Response.ok(resourceGroupsManager.readAllSelectors(database)).build();
+        return Response.ok(resourceGroupsManager.readAllSelectors(database)).header("Access-Control-Allow-Origin", "*")
+            .build();
       default:
     }
-    return Response.ok(ImmutableList.of()).build();
+    return Response.ok(ImmutableList.of()).header("Access-Control-Allow-Origin", "*").build();
   }
 }

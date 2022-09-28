@@ -40,7 +40,7 @@ public class PrestoResource {
           OBJECT_MAPPER.readValue(jsonPayload, ResourceGroupsDetail.class);
       ResourceGroupsDetail newResourceGroup =
           this.resourceGroupsManager.createResourceGroup(resourceGroup, useSchema);
-      return Response.ok(newResourceGroup).build();
+      return Response.ok(newResourceGroup).header("Access-Control-Allow-Origin", "*").build();
     } catch (IOException e) {
       log.error(e.getMessage(), e);
       throw new WebApplicationException(e);
@@ -52,7 +52,7 @@ public class PrestoResource {
   public Response readAllResourceGroups(@QueryParam("useSchema")
                                                 String useSchema) {
     return Response.ok(this.resourceGroupsManager.readAllResourceGroups(
-            useSchema)).build();
+            useSchema)).header("Access-Control-Allow-Origin", "*").build();
   }
 
   @GET
@@ -62,12 +62,13 @@ public class PrestoResource {
                                             String useSchema) {
     if (Strings.isNullOrEmpty(resourceGroupIdStr)) { // if query not specified, return all
       return Response.ok(this.resourceGroupsManager.readAllResourceGroups(useSchema))
+              .header("Access-Control-Allow-Origin", "*")
               .build();
     }
     long resourceGroupId = Long.parseLong(resourceGroupIdStr);
     List<ResourceGroupsDetail> resourceGroup =
         this.resourceGroupsManager.readResourceGroup(resourceGroupId, useSchema);
-    return Response.ok(resourceGroup).build();
+    return Response.ok(resourceGroup).header("Access-Control-Allow-Origin", "*").build();
   }
 
   @Path("/resourcegroup/update")
@@ -80,7 +81,7 @@ public class PrestoResource {
           OBJECT_MAPPER.readValue(jsonPayload, ResourceGroupsDetail.class);
       ResourceGroupsDetail updatedResourceGroup =
           this.resourceGroupsManager.updateResourceGroup(resourceGroup, useSchema);
-      return Response.ok(updatedResourceGroup).build();
+      return Response.ok(updatedResourceGroup).header("Access-Control-Allow-Origin", "*").build();
     } catch (IOException e) {
       log.error(e.getMessage(), e);
       throw new WebApplicationException(e);
@@ -97,7 +98,7 @@ public class PrestoResource {
     }
     long resourceGroupId = Long.parseLong(resourceGroupIdStr);
     resourceGroupsManager.deleteResourceGroup(resourceGroupId, useSchema);
-    return Response.ok().build();
+    return Response.ok().header("Access-Control-Allow-Origin", "*").build();
   }
 
   @POST
@@ -108,7 +109,7 @@ public class PrestoResource {
       SelectorsDetail selector = OBJECT_MAPPER.readValue(jsonPayload, SelectorsDetail.class);
       SelectorsDetail updatedSelector = this.resourceGroupsManager.createSelector(selector,
               useSchema);
-      return Response.ok(updatedSelector).build();
+      return Response.ok(updatedSelector).header("Access-Control-Allow-Origin", "*").build();
     } catch (IOException e) {
       log.error(e.getMessage(), e);
       throw new WebApplicationException(e);
@@ -119,20 +120,20 @@ public class PrestoResource {
   @Path("/selector/read")
   public Response readAllSelectors(@QueryParam("useSchema")
                                              String useSchema) {
-    return Response.ok(this.resourceGroupsManager.readAllSelectors(useSchema)).build();
+    return Response.ok(this.resourceGroupsManager.readAllSelectors(useSchema)).header("Access-Control-Allow-Origin", "*").build();
   }
 
   @GET
   @Path("/selector/read/{resourceGroupId}")
-  public Response readSelector(@QueryParam("resourceGroupId") String resourceGroupIdStr,
+  public Response readSelector(@PathParam("resourceGroupId") String resourceGroupIdStr,
                                @QueryParam("useSchema") String useSchema) {
     if (Strings.isNullOrEmpty(resourceGroupIdStr)) { // if query not specified, return all
-      return Response.ok(this.resourceGroupsManager.readAllSelectors(useSchema)).build();
+      return Response.ok(this.resourceGroupsManager.readAllSelectors(useSchema)).header("Access-Control-Allow-Origin", "*").build();
     }
     long resourceGroupId = Long.parseLong(resourceGroupIdStr);
     List<SelectorsDetail> selectors = this.resourceGroupsManager.readSelector(resourceGroupId,
             useSchema);
-    return Response.ok(selectors).build();
+    return Response.ok(selectors).header("Access-Control-Allow-Origin", "*").build();
   }
 
   @Path("/selector/update")
@@ -148,7 +149,7 @@ public class PrestoResource {
 
       SelectorsDetail updatedSelector =
           this.resourceGroupsManager.updateSelector(selector, newSelector, useSchema);
-      return Response.ok(updatedSelector).build();
+      return Response.ok(updatedSelector).header("Access-Control-Allow-Origin", "*").build();
     } catch (IOException e) {
       log.error(e.getMessage(), e);
       throw new WebApplicationException(e);
@@ -168,7 +169,7 @@ public class PrestoResource {
     } catch (IOException e) {
       log.error(e.getMessage(), e);
     }
-    return Response.ok().build();
+    return Response.ok().header("Access-Control-Allow-Origin", "*").build();
   }
 
   @POST
@@ -181,7 +182,7 @@ public class PrestoResource {
           OBJECT_MAPPER.readValue(jsonPayload, ResourceGroupsManager.GlobalPropertiesDetail.class);
       GlobalPropertiesDetail newGlobalProperty =
           this.resourceGroupsManager.createGlobalProperty(globalProperty, useSchema);
-      return Response.ok(newGlobalProperty).build();
+      return Response.ok(newGlobalProperty).header("Access-Control-Allow-Origin", "*").build();
     } catch (IOException e) {
       log.error(e.getMessage(), e);
       throw new WebApplicationException(e);
@@ -193,6 +194,7 @@ public class PrestoResource {
   public Response readAllGlobalProperties(@QueryParam("useSchema")
                                                     String useSchema) {
     return Response.ok(this.resourceGroupsManager.readAllGlobalProperties(useSchema))
+            .header("Access-Control-Allow-Origin", "*")
             .build();
   }
 
@@ -203,11 +205,12 @@ public class PrestoResource {
                                              String useSchema) {
     if (Strings.isNullOrEmpty(name)) {
       return Response.ok(this.resourceGroupsManager.readAllGlobalProperties(useSchema))
+              .header("Access-Control-Allow-Origin", "*")
               .build();
     }
     List<GlobalPropertiesDetail> globalProperty =
         this.resourceGroupsManager.readGlobalProperty(name, useSchema);
-    return Response.ok(globalProperty).build();
+    return Response.ok(globalProperty).header("Access-Control-Allow-Origin", "*").build();
   }
 
   @Path("/globalproperty/update")
@@ -220,7 +223,7 @@ public class PrestoResource {
           OBJECT_MAPPER.readValue(jsonPayload, ResourceGroupsManager.GlobalPropertiesDetail.class);
       GlobalPropertiesDetail updatedGlobalProperty =
           this.resourceGroupsManager.updateGlobalProperty(globalProperty, useSchema);
-      return Response.ok(updatedGlobalProperty).build();
+      return Response.ok(updatedGlobalProperty).header("Access-Control-Allow-Origin", "*").build();
     } catch (IOException e) {
       log.error(e.getMessage(), e);
       throw new WebApplicationException(e);
@@ -233,30 +236,7 @@ public class PrestoResource {
                                        @QueryParam("useSchema")
                                                String useSchema) {
     resourceGroupsManager.deleteGlobalProperty(name, useSchema);
-    return Response.ok().build();
+    return Response.ok().header("Access-Control-Allow-Origin", "*").build();
   }
-
-  /* Unused API for ExactMatchSourceSelectors, as it is currently not used in Lyft
-    @POST
-    @Path("/exactmatchsourceselector/create")
-    public Response createExactMatchSourceSelector(String jsonPayload) {
-      try {
-        ExactSelectorsDetail exactMatchSourceSelector =
-                OBJECT_MAPPER.readValue(jsonPayload, ExactSelectorsDetail.class);
-        ExactSelectorsDetail newExactMatchSourceSelector =
-                this.resourceGroupsManager.createExactMatchSourceSelector(exactMatchSourceSelector);
-        return Response.ok(newExactMatchSourceSelector).build();
-      } catch (IOException e) {
-        log.error(e.getMessage(), e);
-        throw new WebApplicationException(e);
-      }
-    }
-
-    @POST
-    @Path("/exactmatchsourceselector/read")
-    public Response readExactMatchSourceSelector() {
-      return Response.ok(this.resourceGroupsManager.readExactMatchSourceSelector()).build();
-    }
-  */
 
 }

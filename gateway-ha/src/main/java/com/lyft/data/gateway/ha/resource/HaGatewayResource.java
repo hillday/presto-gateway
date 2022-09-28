@@ -25,20 +25,20 @@ public class HaGatewayResource {
   @POST
   public Response addBackend(ProxyBackendConfiguration backend) {
     ProxyBackendConfiguration updatedBackend = haGatewayManager.addBackend(backend);
-    return Response.ok(updatedBackend).build();
+    return Response.ok(updatedBackend).header("Access-Control-Allow-Origin", "*").build();
   }
 
   @Path("/update")
   @POST
   public Response updateBackend(ProxyBackendConfiguration backend) {
     ProxyBackendConfiguration updatedBackend = haGatewayManager.updateBackend(backend);
-    return Response.ok(updatedBackend).build();
+    return Response.ok(updatedBackend).header("Access-Control-Allow-Origin", "*").build();
   }
 
   @Path("/delete")
   @POST
   public Response removeBackend(String name) {
     ((HaGatewayManager) haGatewayManager).deleteBackend(name);
-    return Response.ok().build();
+    return Response.ok().header("Access-Control-Allow-Origin", "*").build();
   }
 }

@@ -23,19 +23,19 @@ public class GatewayResource {
 
   @GET
   public Response ok(@Context Request request) {
-    return Response.ok("ok").build();
+    return Response.ok("ok").header("Access-Control-Allow-Origin", "*").build();
   }
 
   @GET
   @Path("/backend/all")
   public Response getAllBackends() {
-    return Response.ok(this.gatewayBackendManager.getAllBackends()).build();
+    return Response.ok(this.gatewayBackendManager.getAllBackends()).header("Access-Control-Allow-Origin", "*").build();
   }
 
   @GET
   @Path("/backend/active")
   public Response getActiveBackends() {
-    return Response.ok(gatewayBackendManager.getAllActiveBackends()).build();
+    return Response.ok(gatewayBackendManager.getAllActiveBackends()).header("Access-Control-Allow-Origin", "*").build();
   }
 
   @POST
@@ -47,7 +47,7 @@ public class GatewayResource {
       log.error(e.getMessage(), e);
       return throwError(e);
     }
-    return Response.ok().build();
+    return Response.ok().header("Access-Control-Allow-Origin", "*").build();
   }
 
   @POST
@@ -59,13 +59,14 @@ public class GatewayResource {
       log.error(e.getMessage(), e);
       return throwError(e);
     }
-    return Response.ok().build();
+    return Response.ok().header("Access-Control-Allow-Origin", "*").build();
   }
 
   private Response throwError(Exception e) {
     return Response.status(Response.Status.NOT_FOUND)
         .entity(e.getMessage())
         .type("text/plain")
+        .header("Access-Control-Allow-Origin", "*")
         .build();
   }
 }
