@@ -2,6 +2,13 @@
 
 A load balancer / proxy / gateway for presto compute engine.
 
+How to build from Dockerfile
+------------------------------
+```
+cd Docker/
+docker build -t emr-presto-gateway:v1.0 .
+```
+
 How to setup a dev environment
 ------------------------------
 Step 1: setup mysql. Install docker and run the below command when setting up first time:
