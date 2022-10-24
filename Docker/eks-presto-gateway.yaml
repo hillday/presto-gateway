@@ -33,7 +33,7 @@ metadata:
   name: service-emr-presto-gateway
 spec:
   ports:
-    - port: 8080
+    - port: 80
       targetPort: 8080
       protocol: TCP
   type: NodePort
@@ -58,4 +58,4 @@ spec:
             service:
               name: service-emr-presto-gateway
               port:
-                number: 8080
+                number: 80
