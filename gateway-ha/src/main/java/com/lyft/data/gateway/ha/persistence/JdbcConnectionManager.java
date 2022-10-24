@@ -28,7 +28,8 @@ public class JdbcConnectionManager {
   public void open(@Nullable String routingGroupDatabase) {
     String jdbcUrl = configuration.getJdbcUrl();
     if (routingGroupDatabase != null) {
-      jdbcUrl = jdbcUrl.substring(0, jdbcUrl.lastIndexOf('/') + 1) + routingGroupDatabase;
+      String connParam = "?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8";
+      jdbcUrl = jdbcUrl.substring(0, jdbcUrl.lastIndexOf('/') + 1) + routingGroupDatabase + connParam;
     }
     log.debug("Jdbc url is " + jdbcUrl);
     Base.open(

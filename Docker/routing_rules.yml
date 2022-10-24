@@ -1,0 +1,30 @@
+---
+name: "rule_1"
+description: "test"
+condition: "request.getHeader(\"X-Trino-Source\") contains \"Level_1_org1\""
+actions:
+  - "result.put(\"routingGroup\", \"group1\")"
+---
+name: "rule_2"
+description: "test"
+condition: "request.getHeader(\"X-Trino-Source\") contains \"Level_1_org2\""
+actions:
+  - "result.put(\"routingGroup\", \"group2\")"
+---
+name: "rule_3"
+description: "test"
+condition: "request.getHeader(\"X-Trino-Source\") contains \"Level_1_org3\""
+actions:
+  - "result.put(\"routingGroup\", \"group2\")"
+---
+name: "rule_4"
+description: "test"
+condition: "request.getHeader(\"X-Trino-Source\") contains \"Level_2_org1\""
+actions:
+  - "result.put(\"routingGroup\", \"group3\")"
+---
+name: "rule_5"
+description: "test"
+condition: "request.getHeader(\"X-Trino-Source\") contains \"Level_2_org2\""
+actions:
+  - "result.put(\"routingGroup\", \"group4\")"
